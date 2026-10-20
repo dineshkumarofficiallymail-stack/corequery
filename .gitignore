@@ -9,3 +9,4 @@ eval/results/
 .pytest_cache/
 .DS_Store
 GUIDE.md
+*.zip
