@@ -1,9 +1,9 @@
 # CoreQuery — Natural-Language to SQL Assistant for Core Banking Data
 
-[![Live Demo & API Docs](https://img.shields.io/badge/Netlify-Live%20Demo%20%26%20Docs-00C7B7?logo=netlify&logoColor=white)](https://corequery-banking.netlify.app/)
+[![Live Demo & API Docs](https://img.shields.io/badge/Netlify-Live%20Demo%20%26%20Docs-00C7B7?logo=netlify&logoColor=white)](https://corequery-banking-app.netlify.app/)
 [![CI](https://github.com/dineshkumarofficiallymail-stack/corequery/actions/workflows/ci.yml/badge.svg)](https://github.com/dineshkumarofficiallymail-stack/corequery/actions/workflows/ci.yml)
 
-🌐 **Live Web Application & Interactive API Explorer:** [https://corequery-banking.netlify.app/](https://corequery-banking.netlify.app/)
+🌐 **Live Web Application & Interactive API Explorer:** [https://corequery-banking-app.netlify.app/](https://corequery-banking-app.netlify.app/)
 
 Ask questions about banking data in plain English — *"Which corporates have the highest NACH return rate?"* — and get
 a validated, read-only SQL query, the result set, and a plain-English answer.
