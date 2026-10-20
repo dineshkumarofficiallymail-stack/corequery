@@ -1,0 +1,1008 @@
+[
+  {
+    "id": 1,
+    "difficulty": "easy",
+    "question": "How many customers do we have?",
+    "sql": "SELECT COUNT(*) AS customer_count FROM customers",
+    "columns": [
+      "customer_count"
+    ],
+    "rows": [
+      [
+        400
+      ]
+    ],
+    "row_count": 1
+  },
+  {
+    "id": 2,
+    "difficulty": "easy",
+    "question": "How many active savings accounts are there?",
+    "sql": "SELECT COUNT(*) AS n FROM accounts WHERE account_type='SAVINGS' AND status='ACTIVE'",
+    "columns": [
+      "n"
+    ],
+    "rows": [
+      [
+        335
+      ]
+    ],
+    "row_count": 1
+  },
+  {
+    "id": 3,
+    "difficulty": "easy",
+    "question": "List all branches in Karnataka",
+    "sql": "SELECT branch_code, branch_name, city FROM branches WHERE state='Karnataka'",
+    "columns": [
+      "branch_code",
+      "branch_name",
+      "city"
+    ],
+    "rows": [
+      [
+        "BLR001",
+        "MG Road",
+        "Bengaluru"
+      ],
+      [
+        "BLR002",
+        "Whitefield",
+        "Bengaluru"
+      ]
+    ],
+    "row_count": 2
+  },
+  {
+    "id": 4,
+    "difficulty": "easy",
+    "question": "What is the total balance held in term deposits?",
+    "sql": "SELECT ROUND(SUM(balance),2) AS total_td_balance FROM accounts WHERE account_type='TERM_DEPOSIT' AND status<>'CLOSED'",
+    "columns": [
+      "total_td_balance"
+    ],
+    "rows": [
+      [
+        108542740.46
+      ]
+    ],
+    "row_count": 1
+  },
+  {
+    "id": 5,
+    "difficulty": "easy",
+    "question": "How many customers have pending KYC?",
+    "sql": "SELECT COUNT(*) AS n FROM customers WHERE kyc_status='PENDING'",
+    "columns": [
+      "n"
+    ],
+    "rows": [
+      [
+        30
+      ]
+    ],
+    "row_count": 1
+  },
+  {
+    "id": 6,
+    "difficulty": "medium",
+    "question": "Top 5 branches by total savings account balance",
+    "sql": "SELECT b.branch_name, ROUND(SUM(a.balance),2) AS total_balance FROM accounts a JOIN branches b ON a.branch_id=b.branch_id WHERE a.account_type='SAVINGS' GROUP BY b.branch_id ORDER BY total_balance DESC LIMIT 5",
+    "columns": [
+      "branch_name",
+      "total_balance"
+    ],
+    "rows": [
+      [
+        "Sitabuldi",
+        3447234.98
+      ],
+      [
+        "Mehsana Main",
+        2960660.14
+      ],
+      [
+        "Connaught Place",
+        2628840.73
+      ],
+      [
+        "Shivaji Nagar",
+        2407659.0
+      ],
+      [
+        "Anna Nagar",
+        2207401.51
+      ]
+    ],
+    "row_count": 5
+  },
+  {
+    "id": 7,
+    "difficulty": "medium",
+    "question": "How many NACH presentments were returned for insufficient funds in the last 90 days?",
+    "sql": "SELECT COUNT(*) AS returned_count FROM nach_presentments WHERE status='RETURNED' AND return_reason_code='01' AND presentment_date >= date('2026-09-30','-90 days')",
+    "columns": [
+      "returned_count"
+    ],
+    "rows": [
+      [
+        10
+      ]
+    ],
+    "row_count": 1
+  },
+  {
+    "id": 8,
+    "difficulty": "medium",
+    "question": "Total successful UPI debit amount per month in 2026",
+    "sql": "SELECT strftime('%Y-%m', txn_date) AS month, ROUND(SUM(amount),2) AS total_upi_debit FROM transactions WHERE channel='UPI' AND txn_type='DEBIT' AND status='SUCCESS' AND txn_date >= '2026-01-01' GROUP BY month ORDER BY month",
+    "columns": [
+      "month",
+      "total_upi_debit"
+    ],
+    "rows": [
+      [
+        "2026-01",
+        353688.79
+      ],
+      [
+        "2026-02",
+        259123.63
+      ],
+      [
+        "2026-03",
+        352435.0
+      ],
+      [
+        "2026-04",
+        269930.52
+      ],
+      [
+        "2026-05",
+        291321.01
+      ],
+      [
+        "2026-06",
+        338433.02
+      ],
+      [
+        "2026-07",
+        390531.91
+      ],
+      [
+        "2026-08",
+        410986.44
+      ],
+      [
+        "2026-09",
+        594787.33
+      ]
+    ],
+    "row_count": 9
+  },
+  {
+    "id": 9,
+    "difficulty": "medium",
+    "question": "Average term deposit balance by product code",
+    "sql": "SELECT product_code, ROUND(AVG(balance),2) AS avg_balance FROM accounts WHERE account_type='TERM_DEPOSIT' AND status<>'CLOSED' GROUP BY product_code ORDER BY avg_balance DESC",
+    "columns": [
+      "product_code",
+      "avg_balance"
+    ],
+    "rows": [
+      [
+        "TD-12M",
+        853332.03
+      ],
+      [
+        "TD-6M",
+        750163.17
+      ],
+      [
+        "TD-24M",
+        710857.91
+      ],
+      [
+        "TD-60M",
+        695819.01
+      ],
+      [
+        "TD-36M",
+        626990.67
+      ]
+    ],
+    "row_count": 5
+  },
+  {
+    "id": 10,
+    "difficulty": "medium",
+    "question": "How much minimum balance charge was collected from accounts in Maharashtra branches?",
+    "sql": "SELECT ROUND(SUM(c.amount),2) AS collected FROM charges c JOIN accounts a ON c.account_id=a.account_id JOIN branches b ON a.branch_id=b.branch_id WHERE c.charge_type='MIN_BALANCE' AND c.status='COLLECTED' AND b.state='Maharashtra'",
+    "columns": [
+      "collected"
+    ],
+    "rows": [
+      [
+        8600.0
+      ]
+    ],
+    "row_count": 1
+  },
+  {
+    "id": 11,
+    "difficulty": "medium",
+    "question": "Show dormant savings accounts with balance above 1 lakh",
+    "sql": "SELECT account_number, balance FROM accounts WHERE account_type='SAVINGS' AND status='DORMANT' AND balance > 100000 ORDER BY balance DESC",
+    "columns": [
+      "account_number",
+      "balance"
+    ],
+    "rows": [
+      [
+        "05000000000500",
+        330124.89
+      ],
+      [
+        "10000000000450",
+        195027.67
+      ]
+    ],
+    "row_count": 2
+  },
+  {
+    "id": 12,
+    "difficulty": "medium",
+    "question": "How many active NACH mandates does each sponsor bank have?",
+    "sql": "SELECT sponsor_bank, COUNT(*) AS active_mandates FROM nach_mandates WHERE status='ACTIVE' GROUP BY sponsor_bank ORDER BY active_mandates DESC",
+    "columns": [
+      "sponsor_bank",
+      "active_mandates"
+    ],
+    "rows": [
+      [
+        "HDFC Bank",
+        38
+      ],
+      [
+        "Yes Bank",
+        33
+      ],
+      [
+        "Axis Bank",
+        29
+      ],
+      [
+        "State Bank of India",
+        27
+      ],
+      [
+        "Kotak Mahindra Bank",
+        26
+      ],
+      [
+        "ICICI Bank",
+        24
+      ]
+    ],
+    "row_count": 6
+  },
+  {
+    "id": 13,
+    "difficulty": "medium",
+    "question": "Count of transactions by channel for failed transactions",
+    "sql": "SELECT channel, COUNT(*) AS failed_count FROM transactions WHERE status='FAILED' GROUP BY channel ORDER BY failed_count DESC",
+    "columns": [
+      "channel",
+      "failed_count"
+    ],
+    "rows": [
+      [
+        "UPI",
+        247
+      ],
+      [
+        "IMPS",
+        82
+      ],
+      [
+        "NEFT",
+        65
+      ],
+      [
+        "POS",
+        65
+      ],
+      [
+        "ATM",
+        60
+      ],
+      [
+        "BRANCH",
+        53
+      ],
+      [
+        "NACH",
+        35
+      ],
+      [
+        "INTERNET_BANKING",
+        26
+      ],
+      [
+        "RTGS",
+        14
+      ]
+    ],
+    "row_count": 9
+  },
+  {
+    "id": 14,
+    "difficulty": "medium",
+    "question": "Which customers hold more than 2 accounts?",
+    "sql": "SELECT c.cif_number, c.full_name, COUNT(*) AS account_count FROM customers c JOIN accounts a ON a.customer_id=c.customer_id GROUP BY c.customer_id HAVING COUNT(*) > 2 ORDER BY account_count DESC, c.cif_number",
+    "columns": [
+      "cif_number",
+      "full_name",
+      "account_count"
+    ],
+    "rows": [
+      [
+        "CIF100006",
+        "Gurpreet Pillai",
+        4
+      ],
+      [
+        "CIF100014",
+        "Sneha Sheikh",
+        4
+      ],
+      [
+        "CIF100021",
+        "Farhan Pillai",
+        4
+      ],
+      [
+        "CIF100030",
+        "Aarav Joshi",
+        4
+      ],
+      [
+        "CIF100033",
+        "Imran Mehta",
+        4
+      ],
+      [
+        "CIF100052",
+        "Gurpreet Nair",
+        4
+      ],
+      [
+        "CIF100106",
+        "Aarav Fernandes",
+        4
+      ],
+      [
+        "CIF100170",
+        "Gurpreet Iyer",
+        4
+      ],
+      [
+        "CIF100176",
+        "Zoya Joshi",
+        4
+      ],
+      [
+        "CIF100222",
+        "Gurpreet Rao",
+        4
+      ],
+      [
+        "CIF100228",
+        "Joseph Joshi",
+        4
+      ],
+      [
+        "CIF100229",
+        "Aditya Joshi",
+        4
+      ],
+      [
+        "CIF100238",
+        "Gurpreet Verma",
+        4
+      ],
+      [
+        "CIF100271",
+        "Arjun Mehta",
+        4
+      ],
+      [
+        "CIF100296",
+        "Neha Reddy",
+        4
+      ]
+    ],
+    "row_count": 78
+  },
+  {
+    "id": 15,
+    "difficulty": "hard",
+    "question": "Which corporates have the highest NACH return rate? Show corporate name, total presentments, returned count and return rate percentage",
+    "sql": "SELECT m.corporate_name, COUNT(*) AS total_presentments, SUM(CASE WHEN p.status='RETURNED' THEN 1 ELSE 0 END) AS returned_count, ROUND(100.0*SUM(CASE WHEN p.status='RETURNED' THEN 1 ELSE 0 END)/COUNT(*),2) AS return_rate_pct FROM nach_presentments p JOIN nach_mandates m ON p.mandate_id=m.mandate_id GROUP BY m.corporate_name ORDER BY return_rate_pct DESC",
+    "columns": [
+      "corporate_name",
+      "total_presentments",
+      "returned_count",
+      "return_rate_pct"
+    ],
+    "rows": [
+      [
+        "ICICI Prudential",
+        266,
+        42,
+        15.79
+      ],
+      [
+        "Airtel Payments",
+        156,
+        24,
+        15.38
+      ],
+      [
+        "HDFC Life Insurance",
+        185,
+        25,
+        13.51
+      ],
+      [
+        "Tata AIA",
+        227,
+        28,
+        12.33
+      ],
+      [
+        "Mahindra Finance",
+        326,
+        40,
+        12.27
+      ],
+      [
+        "Zerodha Broking",
+        264,
+        31,
+        11.74
+      ],
+      [
+        "Groww Mutual Fund",
+        145,
+        17,
+        11.72
+      ],
+      [
+        "SBI Cards",
+        330,
+        38,
+        11.52
+      ],
+      [
+        "LIC of India",
+        254,
+        29,
+        11.42
+      ],
+      [
+        "Reliance Jio Infocomm",
+        275,
+        30,
+        10.91
+      ],
+      [
+        "Tata Power Ltd",
+        270,
+        28,
+        10.37
+      ],
+      [
+        "Adani Electricity",
+        196,
+        19,
+        9.69
+      ],
+      [
+        "Bajaj Finance",
+        194,
+        18,
+        9.28
+      ],
+      [
+        "Maharashtra Gas",
+        235,
+        18,
+        7.66
+      ]
+    ],
+    "row_count": 14
+  },
+  {
+    "id": 16,
+    "difficulty": "hard",
+    "question": "List customers with pending KYC who hold an active loan",
+    "sql": "SELECT DISTINCT c.cif_number, c.full_name FROM customers c JOIN accounts a ON a.customer_id=c.customer_id WHERE c.kyc_status='PENDING' AND a.account_type='LOAN' AND a.status='ACTIVE' ORDER BY c.cif_number",
+    "columns": [
+      "cif_number",
+      "full_name"
+    ],
+    "rows": [
+      [
+        "CIF100108",
+        "Pooja Reddy"
+      ],
+      [
+        "CIF100113",
+        "Rohan Chauhan"
+      ],
+      [
+        "CIF100135",
+        "Ramesh Chauhan"
+      ],
+      [
+        "CIF100276",
+        "Ramesh Rao"
+      ],
+      [
+        "CIF100296",
+        "Neha Reddy"
+      ],
+      [
+        "CIF100338",
+        "Joseph Desai"
+      ]
+    ],
+    "row_count": 6
+  },
+  {
+    "id": 17,
+    "difficulty": "hard",
+    "question": "Total outstanding loan amount by loan product and the percentage of sanctioned amount still outstanding",
+    "sql": "SELECT product_code, ROUND(SUM(balance),2) AS outstanding, ROUND(SUM(sanctioned_amount),2) AS sanctioned, ROUND(100.0*SUM(balance)/SUM(sanctioned_amount),2) AS pct_outstanding FROM accounts WHERE account_type='LOAN' AND status='ACTIVE' GROUP BY product_code ORDER BY outstanding DESC",
+    "columns": [
+      "product_code",
+      "outstanding",
+      "sanctioned",
+      "pct_outstanding"
+    ],
+    "rows": [
+      [
+        "LN-HOME",
+        26688230.72,
+        45927234.37,
+        58.11
+      ],
+      [
+        "LN-AUTO",
+        9191243.16,
+        15081199.51,
+        60.95
+      ],
+      [
+        "LN-PERSONAL",
+        5806443.18,
+        10828739.67,
+        53.62
+      ],
+      [
+        "LN-GOLD",
+        3405704.56,
+        5905775.27,
+        57.67
+      ]
+    ],
+    "row_count": 4
+  },
+  {
+    "id": 18,
+    "difficulty": "hard",
+    "question": "Which return reasons are most common for NACH returns, with counts?",
+    "sql": "SELECT return_reason_code, return_reason, COUNT(*) AS n FROM nach_presentments WHERE status='RETURNED' GROUP BY return_reason_code, return_reason ORDER BY n DESC",
+    "columns": [
+      "return_reason_code",
+      "return_reason",
+      "n"
+    ],
+    "rows": [
+      [
+        "01",
+        "Insufficient funds",
+        236
+      ],
+      [
+        "13",
+        "Mandate not registered",
+        42
+      ],
+      [
+        "70",
+        "Amount exceeds mandate limit",
+        35
+      ],
+      [
+        "04",
+        "Account closed",
+        31
+      ],
+      [
+        "05",
+        "No such account",
+        24
+      ],
+      [
+        "52",
+        "Account frozen",
+        19
+      ]
+    ],
+    "row_count": 6
+  },
+  {
+    "id": 19,
+    "difficulty": "hard",
+    "question": "Term deposits maturing in the next 180 days with customer name and amount",
+    "sql": "SELECT a.account_number, c.full_name, a.balance, a.maturity_date FROM accounts a JOIN customers c ON a.customer_id=c.customer_id WHERE a.account_type='TERM_DEPOSIT' AND a.status='ACTIVE' AND a.maturity_date BETWEEN '2026-09-30' AND date('2026-09-30','+180 days') ORDER BY a.maturity_date",
+    "columns": [
+      "account_number",
+      "full_name",
+      "balance",
+      "maturity_date"
+    ],
+    "rows": [
+      [
+        "01000000000511",
+        "Sneha Pillai",
+        55770.43,
+        "2026-12-11"
+      ],
+      [
+        "09000000000541",
+        "Aditya Pillai",
+        522432.71,
+        "2026-12-15"
+      ],
+      [
+        "11000000000619",
+        "Sneha Iyer",
+        213264.78,
+        "2026-12-20"
+      ],
+      [
+        "12000000000717",
+        "Deepak Fernandes",
+        1341121.37,
+        "2027-02-24"
+      ]
+    ],
+    "row_count": 4
+  },
+  {
+    "id": 20,
+    "difficulty": "hard",
+    "question": "Monthly count of NACH returns in 2026",
+    "sql": "SELECT strftime('%Y-%m', presentment_date) AS month, COUNT(*) AS returns FROM nach_presentments WHERE status='RETURNED' AND presentment_date >= '2026-01-01' GROUP BY month ORDER BY month",
+    "columns": [
+      "month",
+      "returns"
+    ],
+    "rows": [
+      [
+        "2026-01",
+        9
+      ],
+      [
+        "2026-02",
+        15
+      ],
+      [
+        "2026-03",
+        12
+      ],
+      [
+        "2026-04",
+        12
+      ],
+      [
+        "2026-05",
+        11
+      ],
+      [
+        "2026-06",
+        15
+      ],
+      [
+        "2026-07",
+        12
+      ],
+      [
+        "2026-08",
+        13
+      ],
+      [
+        "2026-09",
+        3
+      ]
+    ],
+    "row_count": 9
+  },
+  {
+    "id": 21,
+    "difficulty": "hard",
+    "question": "Total charges collected including GST, grouped by charge type",
+    "sql": "SELECT charge_type, ROUND(SUM(amount + gst_amount),2) AS total_with_gst FROM charges WHERE status='COLLECTED' GROUP BY charge_type ORDER BY total_with_gst DESC",
+    "columns": [
+      "charge_type",
+      "total_with_gst"
+    ],
+    "rows": [
+      [
+        "TD_PREMATURE",
+        924051.62
+      ],
+      [
+        "LOAN_LATE_PAYMENT",
+        53985.0
+      ],
+      [
+        "MIN_BALANCE",
+        32037.0
+      ],
+      [
+        "NACH_RETURN",
+        28025.0
+      ],
+      [
+        "ACCOUNT_MAINTENANCE",
+        3304.0
+      ],
+      [
+        "CHEQUE_BOOK",
+        3186.0
+      ],
+      [
+        "ATM_EXCESS",
+        1734.6
+      ],
+      [
+        "SMS_ALERT",
+        849.6
+      ]
+    ],
+    "row_count": 8
+  },
+  {
+    "id": 22,
+    "difficulty": "hard",
+    "question": "Top 10 customers by total successful debit transaction amount in September 2026",
+    "sql": "SELECT c.cif_number, c.full_name, ROUND(SUM(t.amount),2) AS total_debits FROM transactions t JOIN accounts a ON t.account_id=a.account_id JOIN customers c ON a.customer_id=c.customer_id WHERE t.txn_type='DEBIT' AND t.status='SUCCESS' AND t.txn_date BETWEEN '2026-09-01' AND '2026-09-30' GROUP BY c.customer_id ORDER BY total_debits DESC LIMIT 10",
+    "columns": [
+      "cif_number",
+      "full_name",
+      "total_debits"
+    ],
+    "rows": [
+      [
+        "CIF100222",
+        "Gurpreet Rao",
+        3902079.8
+      ],
+      [
+        "CIF100198",
+        "Harpreet Fernandes",
+        3012026.66
+      ],
+      [
+        "CIF100259",
+        "Zoya Pillai",
+        2841033.44
+      ],
+      [
+        "CIF100204",
+        "Kavya Pillai",
+        2710095.09
+      ],
+      [
+        "CIF100200",
+        "Kavya Rao",
+        2469719.0
+      ],
+      [
+        "CIF100302",
+        "Joseph Kumar",
+        2011987.28
+      ],
+      [
+        "CIF100020",
+        "Aishwarya Desai",
+        1933790.43
+      ],
+      [
+        "CIF100357",
+        "Iyer Traders Pvt Ltd",
+        1802627.6
+      ],
+      [
+        "CIF100203",
+        "Sameer Pillai",
+        1791990.29
+      ],
+      [
+        "CIF100176",
+        "Zoya Joshi",
+        1748786.31
+      ]
+    ],
+    "row_count": 10
+  },
+  {
+    "id": 23,
+    "difficulty": "hard",
+    "question": "How many high risk customers have had a NACH return?",
+    "sql": "SELECT COUNT(DISTINCT c.customer_id) AS n FROM customers c JOIN accounts a ON a.customer_id=c.customer_id JOIN nach_mandates m ON m.account_id=a.account_id JOIN nach_presentments p ON p.mandate_id=m.mandate_id WHERE c.risk_category='HIGH' AND p.status='RETURNED'",
+    "columns": [
+      "n"
+    ],
+    "rows": [
+      [
+        7
+      ]
+    ],
+    "row_count": 1
+  },
+  {
+    "id": 24,
+    "difficulty": "hard",
+    "question": "Number of accounts opened per year by account type",
+    "sql": "SELECT strftime('%Y', opened_on) AS year, account_type, COUNT(*) AS opened FROM accounts GROUP BY year, account_type ORDER BY year, account_type",
+    "columns": [
+      "year",
+      "account_type",
+      "opened"
+    ],
+    "rows": [
+      [
+        "2015",
+        "CURRENT",
+        1
+      ],
+      [
+        "2015",
+        "LOAN",
+        1
+      ],
+      [
+        "2015",
+        "SAVINGS",
+        7
+      ],
+      [
+        "2015",
+        "TERM_DEPOSIT",
+        2
+      ],
+      [
+        "2016",
+        "LOAN",
+        2
+      ],
+      [
+        "2016",
+        "SAVINGS",
+        6
+      ],
+      [
+        "2016",
+        "TERM_DEPOSIT",
+        9
+      ],
+      [
+        "2017",
+        "CURRENT",
+        2
+      ],
+      [
+        "2017",
+        "LOAN",
+        2
+      ],
+      [
+        "2017",
+        "SAVINGS",
+        11
+      ],
+      [
+        "2017",
+        "TERM_DEPOSIT",
+        6
+      ],
+      [
+        "2018",
+        "CURRENT",
+        6
+      ],
+      [
+        "2018",
+        "LOAN",
+        1
+      ],
+      [
+        "2018",
+        "SAVINGS",
+        25
+      ],
+      [
+        "2018",
+        "TERM_DEPOSIT",
+        13
+      ]
+    ],
+    "row_count": 47
+  },
+  {
+    "id": 25,
+    "difficulty": "hard",
+    "question": "Which branches have the most senior citizen customers?",
+    "sql": "SELECT b.branch_name, COUNT(*) AS senior_customers FROM customers c JOIN branches b ON c.home_branch_id=b.branch_id WHERE c.customer_type='SENIOR_CITIZEN' GROUP BY b.branch_id ORDER BY senior_customers DESC",
+    "columns": [
+      "branch_name",
+      "senior_customers"
+    ],
+    "rows": [
+      [
+        "Connaught Place",
+        15
+      ],
+      [
+        "Mehsana Main",
+        12
+      ],
+      [
+        "T Nagar",
+        12
+      ],
+      [
+        "Whitefield",
+        12
+      ],
+      [
+        "Anna Nagar",
+        11
+      ],
+      [
+        "Andheri West",
+        11
+      ],
+      [
+        "Fort Main Branch",
+        11
+      ],
+      [
+        "Sitabuldi",
+        9
+      ],
+      [
+        "Banjara Hills",
+        8
+      ],
+      [
+        "Navrangpura",
+        8
+      ],
+      [
+        "MG Road",
+        7
+      ],
+      [
+        "Shivaji Nagar",
+        6
+      ]
+    ],
+    "row_count": 12
+  }
+]

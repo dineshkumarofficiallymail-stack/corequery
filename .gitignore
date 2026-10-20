@@ -1,0 +1,11 @@
+.env
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.db
+*.sqlite*
+eval/results/
+.pytest_cache/
+.DS_Store
+GUIDE.md
